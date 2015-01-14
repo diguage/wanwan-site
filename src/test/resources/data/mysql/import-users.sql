@@ -1,0 +1,2 @@
+INSERT INTO `users` (`id`, `user_name`, `password`, `salt`) VALUES ('1', 'admin', '691b14d79bf0fa2215f155235df5e670b64394cc', '7efbd59d9741d34f');
+INSERT INTO `users` (`id`, `user_name`, `password`, `salt`) VALUES ('2', 'user', '2488aa0c31c624687bd9928e0a5d29e7d1ed520b', '6d65d24122c30500');

@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.diguage.wanwan.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.diguage.wanwan.entity.User" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="salt" property="salt" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="avatar" property="avatar" jdbcType="VARCHAR" />
+    <result column="signature" property="signature" jdbcType="VARCHAR" />
+    <result column="album_count" property="albumCount" jdbcType="INTEGER" />
+    <result column="micropost_count" property="micropostCount" jdbcType="INTEGER" />
+    <result column="follower_count" property="followerCount" jdbcType="INTEGER" />
+    <result column="followed_count" property="followedCount" jdbcType="INTEGER" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="user_type" property="userType" jdbcType="INTEGER" />
+    <result column="user_mall_url" property="userMallUrl" jdbcType="VARCHAR" />
+    <result column="current_coordinate" property="currentCoordinate" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="roles" property="roles" jdbcType="VARCHAR" />
+    <result column="plain_password" property="plainPassword" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_name, password, salt, sex, avatar, signature, album_count, micropost_count, 
+    follower_count, followed_count, city_id, city_name, status, user_type, user_mall_url, 
+    current_coordinate, created_at, updated_at, roles, plain_password
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.diguage.wanwan.entity.UserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from users
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from users
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from users
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.diguage.wanwan.entity.UserExample" >
+    delete from users
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.diguage.wanwan.entity.User" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into users (user_name, password, salt, 
+      sex, avatar, signature, 
+      album_count, micropost_count, follower_count, 
+      followed_count, city_id, city_name, 
+      status, user_type, user_mall_url, 
+      current_coordinate, created_at, updated_at, 
+      roles, plain_password)
+    values (#{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=INTEGER}, #{avatar,jdbcType=VARCHAR}, #{signature,jdbcType=VARCHAR}, 
+      #{albumCount,jdbcType=INTEGER}, #{micropostCount,jdbcType=INTEGER}, #{followerCount,jdbcType=INTEGER}, 
+      #{followedCount,jdbcType=INTEGER}, #{cityId,jdbcType=INTEGER}, #{cityName,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{userType,jdbcType=INTEGER}, #{userMallUrl,jdbcType=VARCHAR}, 
+      #{currentCoordinate,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{roles,jdbcType=VARCHAR}, #{plainPassword,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.diguage.wanwan.entity.User" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into users
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="salt != null" >
+        salt,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="avatar != null" >
+        avatar,
+      </if>
+      <if test="signature != null" >
+        signature,
+      </if>
+      <if test="albumCount != null" >
+        album_count,
+      </if>
+      <if test="micropostCount != null" >
+        micropost_count,
+      </if>
+      <if test="followerCount != null" >
+        follower_count,
+      </if>
+      <if test="followedCount != null" >
+        followed_count,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="cityName != null" >
+        city_name,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+      <if test="userMallUrl != null" >
+        user_mall_url,
+      </if>
+      <if test="currentCoordinate != null" >
+        current_coordinate,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+      <if test="roles != null" >
+        roles,
+      </if>
+      <if test="plainPassword != null" >
+        plain_password,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null" >
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="avatar != null" >
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null" >
+        #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="albumCount != null" >
+        #{albumCount,jdbcType=INTEGER},
+      </if>
+      <if test="micropostCount != null" >
+        #{micropostCount,jdbcType=INTEGER},
+      </if>
+      <if test="followerCount != null" >
+        #{followerCount,jdbcType=INTEGER},
+      </if>
+      <if test="followedCount != null" >
+        #{followedCount,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="cityName != null" >
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="userMallUrl != null" >
+        #{userMallUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="currentCoordinate != null" >
+        #{currentCoordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="roles != null" >
+        #{roles,jdbcType=VARCHAR},
+      </if>
+      <if test="plainPassword != null" >
+        #{plainPassword,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.diguage.wanwan.entity.UserExample" resultType="java.lang.Integer" >
+    select count(*) from users
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update users
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userName != null" >
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salt != null" >
+        salt = #{record.salt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=INTEGER},
+      </if>
+      <if test="record.avatar != null" >
+        avatar = #{record.avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.signature != null" >
+        signature = #{record.signature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.albumCount != null" >
+        album_count = #{record.albumCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.micropostCount != null" >
+        micropost_count = #{record.micropostCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.followerCount != null" >
+        follower_count = #{record.followerCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.followedCount != null" >
+        followed_count = #{record.followedCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.cityId != null" >
+        city_id = #{record.cityId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cityName != null" >
+        city_name = #{record.cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.userType != null" >
+        user_type = #{record.userType,jdbcType=INTEGER},
+      </if>
+      <if test="record.userMallUrl != null" >
+        user_mall_url = #{record.userMallUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currentCoordinate != null" >
+        current_coordinate = #{record.currentCoordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdAt != null" >
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedAt != null" >
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.roles != null" >
+        roles = #{record.roles,jdbcType=VARCHAR},
+      </if>
+      <if test="record.plainPassword != null" >
+        plain_password = #{record.plainPassword,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update users
+    set id = #{record.id,jdbcType=INTEGER},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      salt = #{record.salt,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=INTEGER},
+      avatar = #{record.avatar,jdbcType=VARCHAR},
+      signature = #{record.signature,jdbcType=VARCHAR},
+      album_count = #{record.albumCount,jdbcType=INTEGER},
+      micropost_count = #{record.micropostCount,jdbcType=INTEGER},
+      follower_count = #{record.followerCount,jdbcType=INTEGER},
+      followed_count = #{record.followedCount,jdbcType=INTEGER},
+      city_id = #{record.cityId,jdbcType=INTEGER},
+      city_name = #{record.cityName,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      user_type = #{record.userType,jdbcType=INTEGER},
+      user_mall_url = #{record.userMallUrl,jdbcType=VARCHAR},
+      current_coordinate = #{record.currentCoordinate,jdbcType=VARCHAR},
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      roles = #{record.roles,jdbcType=VARCHAR},
+      plain_password = #{record.plainPassword,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.diguage.wanwan.entity.User" >
+    update users
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null" >
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="avatar != null" >
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null" >
+        signature = #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="albumCount != null" >
+        album_count = #{albumCount,jdbcType=INTEGER},
+      </if>
+      <if test="micropostCount != null" >
+        micropost_count = #{micropostCount,jdbcType=INTEGER},
+      </if>
+      <if test="followerCount != null" >
+        follower_count = #{followerCount,jdbcType=INTEGER},
+      </if>
+      <if test="followedCount != null" >
+        followed_count = #{followedCount,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="cityName != null" >
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="userMallUrl != null" >
+        user_mall_url = #{userMallUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="currentCoordinate != null" >
+        current_coordinate = #{currentCoordinate,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="roles != null" >
+        roles = #{roles,jdbcType=VARCHAR},
+      </if>
+      <if test="plainPassword != null" >
+        plain_password = #{plainPassword,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.diguage.wanwan.entity.User" >
+    update users
+    set user_name = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      signature = #{signature,jdbcType=VARCHAR},
+      album_count = #{albumCount,jdbcType=INTEGER},
+      micropost_count = #{micropostCount,jdbcType=INTEGER},
+      follower_count = #{followerCount,jdbcType=INTEGER},
+      followed_count = #{followedCount,jdbcType=INTEGER},
+      city_id = #{cityId,jdbcType=INTEGER},
+      city_name = #{cityName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      user_type = #{userType,jdbcType=INTEGER},
+      user_mall_url = #{userMallUrl,jdbcType=VARCHAR},
+      current_coordinate = #{currentCoordinate,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      roles = #{roles,jdbcType=VARCHAR},
+      plain_password = #{plainPassword,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
