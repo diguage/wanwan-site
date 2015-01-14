@@ -2,6 +2,10 @@
 
 用于调试错误的项目。
 
+## 数据库初始化
+
+为了方便调试，修改一下数据库配置（在`application.properties`文件中配置，数据库的Schema名称需要配置成`wanwan`）后，运行一下`mvn clean antrun:run -Prefresh-db`就可以更新好数据库了。
+
 ## 遇到的错误
 
 ### 开始遇到的错误在这里：

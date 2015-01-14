@@ -406,7 +406,7 @@
                                      onerror="continue"
                                      encoding="${project.build.sourceEncoding}">
                                     <classpath refid="maven.test.classpath"/>
-                                    <transaction src="src/main/resources/sql/mysql/huaba-schema.sql"/>
+                                    <transaction src="src/main/resources/sql/mysql/wanwan-schema.sql"/>
                                     <transaction src="src/test/resources/data/mysql/cleanup-data.sql"/>
                                     <transaction src="src/test/resources/data/mysql/import-cities.sql"/>
                                     <transaction src="src/test/resources/data/mysql/import-users.sql"/>
